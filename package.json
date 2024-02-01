@@ -14,7 +14,6 @@
     "lint:style": "stylelint src/**/*.{css,scss,vue} --cache --fix",
     "prepare": "husky install",
     "preinstall": "node ./scritps/preinstall.js",
-    "commitlint": "commitlint --config commitlint.config.cjs -e -V",
     "build:test": "vue-tsc && vite build --mode test",
     "build:pro": "vue-tsc && vite build --mode production"
   },
@@ -30,8 +29,6 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.23.9",
-    "@commitlint/cli": "^18.6.0",
-    "@commitlint/config-conventional": "^18.6.0",
     "@types/node": "^20.11.7",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
