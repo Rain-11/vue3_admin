@@ -1,7 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ElConfigProvider } from "element-plus";
+//@ts-expect-error 忽略检测
+import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+</script>
 
 <template>
-  <h1>hello</h1>
+  <el-config-provider :locale="zhCn">
+    <router-view></router-view>
+  </el-config-provider>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

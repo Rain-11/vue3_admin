@@ -1,0 +1,18 @@
+@import './reset.scss';
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: $home_menu_background_color;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: antiquewhite;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $home_menu_background_color;
+}
