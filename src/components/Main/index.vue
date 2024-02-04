@@ -18,24 +18,9 @@ watch(
 <template>
   <div>
     <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" v-if="flag" />
-      </transition>
+      <component :is="Component" v-if="flag" />
     </router-view>
   </div>
 </template>
 
-<style scoped lang="scss">
-/* 下面我们会解释这些 class 是做什么的 */
-.fade-enter-active {
-  transition: all 2s ease;
-}
-
-.fade-enter-from {
-  opacity: 0;
-}
-
-.fade-leave-to {
-  opacity: 1;
-}
-</style>
+<style scoped lang="scss"></style>

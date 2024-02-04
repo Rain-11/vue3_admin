@@ -20,6 +20,16 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
+        "/brand": {
+          target: "http://139.198.104.58:8209",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/brand/, ""),
+        },
+        "/upload": {
+          target: "http://139.198.104.58:8209",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/upload/, ""),
+        },
       },
     },
     plugins: [
@@ -30,6 +40,7 @@ export default defineConfig(({ mode }) => {
       VueSetupExtend(),
       vue(),
       AutoImport({
+        imports: ["vue", "pinia", "vue-router"],
         resolvers: [ElementPlusResolver()],
       }),
       Components({

@@ -3,9 +3,9 @@ import type { LoginData, LoginResponse, UserInfoResponse } from "./type";
 import { LogoutResponse } from "./type";
 
 enum UserApi {
-  LOGIN_ADDRESS = "/admin/acl/index/login",
-  USER_INFORMATION = "/admin/acl/index/info",
-  LOG_OUT_LOG_IN = "/admin/acl/index/logout",
+  LOGIN_ADDRESS = "/api/admin/acl/index/login",
+  USER_INFORMATION = "/api/admin/acl/index/info",
+  LOG_OUT_LOG_IN = "/api/admin/acl/index/logout",
 }
 
 export const loginRequest = (data: LoginData) => {

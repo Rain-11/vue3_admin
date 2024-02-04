@@ -2,10 +2,7 @@ import userStore from "@/store/modules/user";
 import axios from "axios";
 import { ElMessage } from "element-plus";
 
-const request = axios.create({
-  baseURL: "/api",
-  timeout: 5000,
-});
+const request = axios.create({});
 
 request.interceptors.request.use((config) => {
   const userData = userStore();

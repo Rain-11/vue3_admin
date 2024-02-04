@@ -6,14 +6,14 @@ export interface PagingRequest {
 }
 
 export interface Records {
-  id: number;
-  createTime: string;
-  updateTime: string;
+  id?: number | undefined;
+  createTime?: string;
+  updateTime?: string;
   tmName: string;
-  logUrl: string;
+  logoUrl: string;
 }
 
-interface Paging {
+export interface Paging {
   records: Records[];
   total: number;
   size: number;

@@ -31,7 +31,7 @@ const rules = reactive<FormRules<LoginForm>>({
   ],
   password: [
     { required: true, message: "请填写密码", trigger: "blur" },
-    { min: 10, max: 10, message: "密码长度为10位", trigger: "blur" },
+    { min: 6, max: 6, message: "密码长度为6位", trigger: "blur" },
   ],
 });
 const userData = userStore();
