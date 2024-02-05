@@ -23,5 +23,7 @@ export interface ProductAttributes {
   categoryId: number;
   categoryLevel: number;
   attrValueList: Attr[];
+  idAndValue: string;
 }
+
 export interface AttributeListData extends ResponseData<ProductAttributes[]> {}

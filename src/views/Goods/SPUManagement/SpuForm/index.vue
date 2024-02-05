@@ -211,7 +211,7 @@ let spuFormDataType = reactive<SpuFormDataType>({
   spuSaleAttrList: [],
 });
 const fileList = ref<UploadUserFile[]>([]);
-async function initializeData(spu: Record) {
+function initializeData(spu: Record) {
   getBrandList();
   getAllImage(spu.id as number);
   initializeSalesAttributes(spu.id as number);

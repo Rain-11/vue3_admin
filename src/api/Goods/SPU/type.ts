@@ -29,6 +29,7 @@ export interface BrandType {
   tmName: string;
   logoUrl: string;
 }
+
 export interface ObtainAllBrandResponseTypes
   extends ResponseData<BrandType[]> {}
 
@@ -58,6 +59,7 @@ export interface SalesAttributesType {
   spuSaleAttrValueList: AttributeValueType[];
   flag?: boolean;
   newSaleAttrValue?: string;
+  idAndValue?: string;
 }
 
 export interface SalesAttributesTypeResponse
@@ -67,7 +69,9 @@ export interface BaseSaleAttr {
   id: number;
   name: string;
 }
+
 export interface BaseSaleAttrResponse extends ResponseData<BaseSaleAttr[]> {}
+
 export interface SpuFormDataType {
   category3Id: number | undefined;
   id: number | undefined;
@@ -77,3 +81,95 @@ export interface SpuFormDataType {
   spuImageList: ImageSpu[];
   spuSaleAttrList: SalesAttributesType[];
 }
+
+export interface SkuForm {
+  category3Id: number;
+  price: number;
+  skuAttrValueList: SkuAttrValueList[];
+  skuDefaultImg: string;
+  skuDesc: string;
+  skuName: string;
+  skuSaleAttrValueList: SkuSaleAttrValueList[];
+  spuId: number;
+  tmId: number;
+  weight: string;
+}
+
+export interface SkuSaleAttrValueList {
+  saleAttrId: number;
+  saleAttrValueId: number;
+}
+
+export interface SkuAttrValueList {
+  attrId: number;
+  valueId: number;
+}
+export interface SkuFormResponse extends ResponseData<SkuForm[]> {}
+export interface SkuFormData {
+  category3Id: number;
+  price: number;
+  skuAttrValueList: SkuAttrValueList[];
+  skuDefaultImg: string;
+  skuDesc: string;
+  skuName: string;
+  skuSaleAttrValueList: SkuSaleAttrValueList[];
+  spuId: number;
+  tmId: number;
+  weight: string;
+  isSale?: number;
+  id?: number;
+}
+//商品详情
+export interface SkuInfo {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  spuId: number;
+  price: number;
+  skuName: string;
+  skuDesc: string;
+  weight: string;
+  tmId: number;
+  category3Id: number;
+  skuDefaultImg: string;
+  isSale: number;
+  skuImageList: SkuImageList[];
+  skuAttrValueList: SkuAttrValueList[];
+  skuSaleAttrValueList: SkuSaleAttrValueList[];
+}
+
+export interface SkuSaleAttrValueList {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  skuId: number;
+  spuId: number;
+  saleAttrValueId: number;
+  saleAttrId: number;
+  saleAttrName: string;
+  saleAttrValueName: string;
+}
+
+export interface SkuAttrValueList {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  attrId: number;
+  valueId: number;
+  skuId: number;
+  attrName: string;
+  valueName: string;
+}
+
+interface SkuImageList {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  skuId: number;
+  imgName: string;
+  imgUrl: string;
+  spuImgId: number;
+  isDefault: string;
+}
+
+export interface SkuInfoResponse extends ResponseData<SkuInfo> {}

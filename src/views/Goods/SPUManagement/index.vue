@@ -1,11 +1,12 @@
 <script setup lang="ts" name="SPUManagement">
-import { getListSpuS } from "@/api/Goods/SPU";
-import { SPUData, Record } from "@/api/Goods/SPU/type";
+import { deleteBySpuId, getListSpuS, getSkuBySpuId } from "@/api/Goods/SPU";
+import { SPUData, Record, SkuFormData } from "@/api/Goods/SPU/type";
 import classificationStore from "@/store/modules/classification";
 import { ElMessage } from "element-plus";
 import { reactive, ref, watch } from "vue";
-import SpuForm from "./SpuForm/index.vue";
 import SkuForm from "./SkuForm/index.vue";
+import SpuForm from "./SpuForm/index.vue";
+
 let current = ref(1);
 let limit = ref(3);
 //获取SPU列表数据
@@ -15,6 +16,7 @@ let spuList = reactive<SPUData>({
   searchCount: false,
   total: undefined,
 });
+
 async function getListSpu(pager = 1) {
   current.value = pager;
   const result = await getListSpuS(
@@ -38,6 +40,7 @@ async function getListSpu(pager = 1) {
     });
   }
 }
+
 watch(
   () => classStore.thirdLevelClassificationID,
   () => {
@@ -52,10 +55,12 @@ function sizeChange() {
 
 //控制场景切换
 let sceneSwitch = ref(0);
+
 function switchingScenes() {
   sceneSwitch.value = 1;
-  spuForm.value.addInit(classStore.thirdLevelClassificationID);
+  spuForm.value.addInit(classStore.thirdLevelClassificationID as number);
 }
+
 function displayList(isAdd: boolean) {
   sceneSwitch.value = 0;
   if (isAdd) {
@@ -64,10 +69,58 @@ function displayList(isAdd: boolean) {
     getListSpu(current.value);
   }
 }
+
 let spuForm = ref();
+
 function updateSPU(row: Record) {
   sceneSwitch.value = 1;
   spuForm.value.initializeData(row);
+}
+
+function clickScenes() {
+  sceneSwitch.value = 0;
+}
+
+const skuForm = ref();
+
+function addSku(row: Record) {
+  sceneSwitch.value = 2;
+  skuForm.value.initialization(
+    classStore.firstLevelClassificationID as number,
+    classStore.secondaryClassificationID as number,
+    row,
+  );
+}
+const skuVie = ref<SkuFormData[]>([]);
+const dialogVisible = ref(false);
+async function viewSku(row: Record) {
+  const result = await getSkuBySpuId(row.id as number);
+  if (!result.ok) {
+    ElMessage.error({
+      message: "获取SKU失败",
+      showClose: true,
+    });
+  } else {
+    skuVie.value = result.data;
+    dialogVisible.value = true;
+  }
+}
+
+async function deleteSkuById(row: Record) {
+  const result = await deleteBySpuId(row.id as number);
+  if (result.ok) {
+    ElMessage.success({
+      message: "删除成功",
+      showClose: true,
+    });
+    let page = spuList.records.length > 1 ? current.value : current.value - 1;
+    getListSpu(page);
+  } else {
+    ElMessage.error({
+      message: "删除失败",
+      showClose: true,
+    });
+  }
 }
 </script>
 
@@ -108,7 +161,7 @@ function updateSPU(row: Record) {
               type="primary"
               icon="Plus"
               size="small"
-              @click="sceneSwitch = 2"
+              @click="addSku(row)"
             ></el-button>
             <el-button
               type="primary"
@@ -121,9 +174,14 @@ function updateSPU(row: Record) {
               type="primary"
               icon="View"
               size="small"
-              @click="sceneSwitch = 1"
+              @click="viewSku(row)"
             ></el-button>
-            <el-button type="danger" icon="Delete" size="small"></el-button>
+            <el-button
+              type="danger"
+              icon="Delete"
+              size="small"
+              @click="deleteSkuById(row)"
+            ></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -144,8 +202,28 @@ function updateSPU(row: Record) {
       @changingScene="displayList"
       ref="spuForm"
     />
-    <SkuForm v-show="sceneSwitch === 2" />
+    <SkuForm
+      v-show="sceneSwitch === 2"
+      @clickScenes="clickScenes"
+      ref="skuForm"
+    />
   </el-card>
+  <el-dialog v-model="dialogVisible" title="Sku列表">
+    <el-table :data="skuVie" border>
+      <el-table-column property="skuName" label="名字" width="150" />
+      <el-table-column property="price" label="价格" width="200" />
+      <el-table-column property="weight" label="重量" />
+      <el-table-column label="图片">
+        <template #default="{ row }">
+          <img
+            :src="row.skuDefaultImg"
+            alt="默认图片"
+            style="width: 100px; height;: 100px"
+          />
+        </template>
+      </el-table-column>
+    </el-table>
+  </el-dialog>
 </template>
 
 <style scoped></style>
